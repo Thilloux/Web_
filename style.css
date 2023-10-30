@@ -1,0 +1,30 @@
+h1 {
+
+    width: 50%;
+    margin: auto;
+    padding: 25px;
+
+    color: black;
+    font-style: normal;
+    font-size: 1em;
+    font-family: Arial,Helvetica, sans-serif;
+    background-color: lightblue; 
+    text-align: center;
+
+    border: 3px skyblue solid;
+    
+    border-radius: 10px 90px 10px 90px;
+
+    box-shadow: 6px 6px 0px rgba(0, 0, 0);
+}
+
+ul{
+    width: 50%;
+    text-align: justify;
+    color: black;
+    font-style: normal;
+    font-size: 1em;
+    font-family: Arial,Helvetica, sans-serif;
+    margin: 0;
+    padding: 80px;
+}
