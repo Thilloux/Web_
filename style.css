@@ -28,6 +28,12 @@ nav{
     padding: 25px;
     text-align: center;
 
+    font-style: normal;
+    font-size: 1em;
+    text-decoration: none;
+    font-family: Arial,Helvetica, sans-serif;
+    text-align: center;
+
     border: 1px black solid;
     border-radius: 10px;
 
@@ -76,3 +82,9 @@ nav{
 .humidite:hover{
     box-shadow: 5px 5px 5px;
 }
+
+a {
+    outline: none;
+    color: black;
+    text-decoration: none;
+  }
