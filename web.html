@@ -35,21 +35,23 @@
                 <div>Subscribed to <input id="topic" disabled="disabled" type="text" /> Status: <input id="status" size="80" disabled="enable" type="text" /></div>
                 <input id="Button1" value="Led ON" type="button" />
                 <input id="Button0" value="Led OFF" type="button" />
-                <div id="chart1"></div>
-                <div id="chart2"></div>       
+                
+                      
             </section>
             <section class="temperature_donnee">
                 <h1 id="Température">Température</h1>
                 <div class="temp_reel">Température mesurée en temps réel :<div class="degre">25.2 °C</div></div>
-                <div class="historique">Historique : </div>          
+                <div class="historique">Historique : <div id="chart1"></div></div>          
             </section>
             <section class="humidite_donnee">
                 <h1 id="Humidité">Humidité</h1>
                 <div class="temp_reel">Humidité mesurée en temps réel :<div class="degre">25.2 °C</div></div>
-                <div class="historique">Historique : </div>
+                <div class="historique">Historique : <div id="chart2"></div> </div>
             </section>
             <section class="alerte_donnee">
                 <h1 id="Système de sécurité">Système de sécurité</h1>
+                <input id="rearmement" type="checkbox" value="Réarmement">
+                <label for="Réarmement">Système opérationnel</label>
             </section>
         </main>
         <footer>
