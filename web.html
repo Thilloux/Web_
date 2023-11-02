@@ -4,30 +4,61 @@
         <meta charset="utf-8">
         <title>Platform IoT</title>
         <link href="style.css" rel="stylesheet">
+        <script src="mqttws31.js" type="text/javascript"></script>
+<script src="./jqplot_librairies/jquery.js" type="text/javascript"></script>
+<script type="text/javascript" src="./jqplot_librairies/jquery.jqplot.js"></script>
+<script type="text/javascript" src="./jqplot_librairies/jqplot.canvasTextRenderer.js"></script>
+<script type="text/javascript" src="./jqplot_librairies/jqplot.canvasAxisLabelRenderer.js"></script>
+<script src="./jqplot_librairies/jqplot.categoryAxisRenderer.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="./jqplot_librairies/jquery.jqplot.css" />
     </head>
-    <header>
-        <h1>Système de Sécurité du musée TT</h1>
-    </header>
-    <nav>
-            <div class="table">
-                <p class="temp">
-                    <a href="#Température">Température</a>
-                </p>
-                <p class="humidite"><a href="#Humidité">Humidité</a></p>
-                <p class="alerte"><a href="#Système de sécurité">Système de sécurité</a></p>
-            </div>
-    </nav>
-    <main>
-        <section>
-            <body>
-                <p><h1 id="Température">Température</h1></p>
-                <p><h1 id="Humidité">Humidité</h1></p>
-                <p><h1 id="Système de sécurité">Système de sécurité</h1></p>
-            </body>
-        </section>
-    </main>
-    <footer>
-
-    </footer>
+    <body>
+        <header>
+            <!-- <img src="logo.png" alt="logo"> -->
+            <h1 class="entete">Système de Sécurité du musée TT</h1>
+        </header>
+        <nav>
+                <div class="table">
+                    <p class="temp">
+                        <a href="#Température">Température</a>
+                    </p>
+                    <p class="humidite">
+                        <a href="#Humidité">Humidité</a>
+                    </p>
+                    <p class="alerte">
+                        <a href="#Système de sécurité">Système de sécurité</a>
+                    </p>
+                </div>
+        </nav>
+        <main>
+            <section class="statut">
+                <div>Subscribed to <input id="topic" disabled="disabled" type="text" /> Status: <input id="status" size="80" disabled="enable" type="text" /></div>
+                <input id="Button1" value="Led ON" type="button" />
+                <input id="Button0" value="Led OFF" type="button" />
+                <div id="chart1"></div>
+                <div id="chart2"></div>       
+            </section>
+            <section class="temperature_donnee">
+                <h1 id="Température">Température</h1>
+                <div class="temp_reel">Température mesurée en temps réel :<div class="degre">25.2 °C</div></div>
+                <div class="historique">Historique : </div>          
+            </section>
+            <section class="humidite_donnee">
+                <h1 id="Humidité">Humidité</h1>
+                <div class="temp_reel">Humidité mesurée en temps réel :<div class="degre">25.2 °C</div></div>
+                <div class="historique">Historique : </div>
+            </section>
+            <section class="alerte_donnee">
+                <h1 id="Système de sécurité">Système de sécurité</h1>
+            </section>
+        </main>
+        <footer>
+            <h1>Contact</h1>
+            <p>Thilloux Théo : theo.thilloux@etu.emse.fr <br>Techer Thomas : thomas.techer@etu.emse.fr</p>
+        </footer>
+        <script src="script.js">
+        </script>
+    </body>
+    
     
 </html>
