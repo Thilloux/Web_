@@ -41,11 +41,14 @@ function TT(){
     // tt.value = "test";
     // status.value = "Test 2";
     // button.textContent = "Test 2";
+    let alerte = document.querySelector("#alerte_rouge");
+    //alerte.style.display = "none";
     if(flag == 0){
         i++;
     }
     
     let rearmement = document.querySelector("#rearmement");
+    rearmement.checked = true;
     let temperature = document.querySelector(".degre");
     temperature.textContent = i.toString();
     if(i>10 && rearmement.checked){
@@ -54,7 +57,8 @@ function TT(){
         i=0;
         const webhookURL = 'https://maker.ifttt.com/trigger/alert_museum/json/with/key/KauxDKYMOtdLxqcE5DLMPaIv1I91HBJNFqk9_7nv1g?value1=value1&value2=value2&value3=value3';
         rearmement.checked = false;
-        flag = 0;
+        alerte.style.display = 'inline';
+        // flag = 0;
     // Écoutez le résultat de l'applet IFTTT
     fetch(webhookURL, {
         method: 'POST',
