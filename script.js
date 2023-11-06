@@ -118,7 +118,7 @@ function onMessageArrived(message) {
   	});
 	}
 	if(topic === "TT/Temp"){
-	//$('#ws').prepend('<li>' + topic + ' = ' + payload + '</li>');
+	$('.degre').val(payload);//prepend('<li>' + topic + ' = ' + payload + '</li>');
 	var date= new Date();
 	var xlabel = date.getMinutes() + ":"+ date.getSeconds();
 
@@ -144,7 +144,7 @@ function onMessageArrived(message) {
 };
 
 $(document).ready(function() {
-    setInterval(TT, 1000);
+    //setInterval(TT, 1000);
     onMessageArrived()
     //TT();
     MQTTconnect();
