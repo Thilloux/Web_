@@ -11,6 +11,110 @@
 <script type="text/javascript" src="./jqplot_librairies/jqplot.canvasAxisLabelRenderer.js"></script>
 <script src="./jqplot_librairies/jqplot.categoryAxisRenderer.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="./jqplot_librairies/jquery.jqplot.css" />
+<script type="text/javascript">
+    var mqtt;
+    var reconnectTimeout = 2000;
+    function MQTTconnect() {
+        mqtt = new Paho.MQTT.Client("localhost",8000,"/mqtt","web_" + parseInt(Math.random() * 100, 10) );
+        var options = {
+            timeout: 3,
+            useSSL: false,
+            cleanSession: true,
+            onSuccess: onConnect,
+            onFailure: function (message) {
+                $('#status').val("Connection failed: " + message.errorMessage + "Retrying");
+                setTimeout(MQTTconnect, reconnectTimeout);
+            }
+        };
+        mqtt.onConnectionLost = onConnectionLost;
+        mqtt.onMessageArrived = onMessageArrived;
+        mqtt.connect(options);
+    }
+    function onConnect() {
+        $('#status').val('Connected to host ');
+        // Connection succeeded; subscribe to our topic
+        mqtt.subscribe("TT/temp", {qos: 2});
+        $('#topic').val("Topic")
+    }
+    function onConnectionLost(response) {
+        setTimeout(MQTTconnect, reconnectTimeout);
+        $('#status').val("connection lost: " + responseObject.errorMessage + ". Reconnecting");
+    };
+    // function onMessageArrived(message) {
+    //     var topic = message.destinationName;
+    //     var payload = message.payloadString;
+    //     let temperature = document.querySelector(".degre");
+    //     temperature.textContent = payload.toString();
+    //     //$('.degre').val(payload.toString());
+    // };
+
+        var plot1 = null;
+    var plot2 = null;
+    var i=1;
+    var tab_temp = [];
+    var tab2 = [];
+    function onMessageArrived(message) {
+        var topic = message.destinationName;
+        var payload = message.payloadString;
+        if(topic === "TT/Aff"){
+        payload = JSON.parse(payload);
+        for (var i=0; i<payload.length;i++){
+        tab2.push(data[i].time, data[i].temp);
+        }
+        if (plot2) plot2.destroy();
+        plot2 = $.jqplot('chart2', tab2, {  
+                series:[{showMarker:false}],
+                axes:{
+                xaxis:{
+                label:'heure (S)',
+            labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+            renderer: $.jqplot.CategoryAxisRenderer,
+                },
+                yaxis:{
+                label:'Temperature ( °C )',
+            labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+                }
+            }
+        });
+        }
+        if(topic === "TT/temp"){
+        let temperature = document.querySelector(".degre");
+        temperature.textContent = payload.toString();
+        var date= new Date();
+        var xlabel = date.getMinutes() + ":"+ date.getSeconds();
+
+        tab_temp.push([xlabel,parseFloat(payload)]);
+        if (tab_temp.length > 20 ) tab_temp.shift();
+        if (plot1) plot1.destroy();
+
+        plot1 = $.jqplot('chart1', [tab_temp], {  
+            series:[{showMarker:false}],
+            axes:{
+            xaxis:{
+            label:'temps (S)',
+        labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+        renderer: $.jqplot.CategoryAxisRenderer,
+            },
+            yaxis:{
+            label:'Temperature ( °C )',
+        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+            }
+        }
+    });
+    }
+    };
+    
+    
+    $(document).ready(function() {
+        MQTTconnect();
+        $("#Button1").click(function() {
+            mqtt.send("TT/led","ON");
+        });
+        $("#Button0").click(function() {
+            mqtt.send("TT/led","OFF");
+        });
+    });
+    </script>
     </head>
     <body>
         <header>
@@ -35,8 +139,7 @@
                 <div>Subscribed to <input id="topic" disabled="disabled" type="text" /> Status: <input id="status" size="80" disabled="enable" type="text" /></div>
                 <input id="Button1" value="Led ON" type="button" />
                 <input id="Button0" value="Led OFF" type="button" />
-                
-                      
+                <ul id="ws" style="font-family: 'Courier New',Courier,monospace;"></ul>      
             </section>
             <section class="temperature_donnee">
                 <h1 id="Température">Température</h1>
@@ -59,7 +162,7 @@
             <h1>Contact</h1>
             <p>Thilloux Théo : theo.thilloux@etu.emse.fr <br>Techer Thomas : thomas.techer@etu.emse.fr</p>
         </footer>
-        <script src="script.js">
+        <!-- <script src="script.js"> -->
         </script>
     </body>
     
