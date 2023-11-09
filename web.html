@@ -52,7 +52,7 @@
         var payload = message.payloadString;
         if(topic === "TT/Aff"){
             let Humidite = document.querySelector(".degreH");
-            Humidite.textContent = "truc";
+            Humidite.textContent = payload.length.toString();
         //payload = JSON.parse(payload);
         tab2.push([payload.length, payload.length]);
         /*for (var i=0; i<payload.length;i++){
