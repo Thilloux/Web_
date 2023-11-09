@@ -20,7 +20,7 @@ function onConnect() {
 	$('#status').val('Connected to host ');
 	// Connection succeeded; subscribe to our topic
 	mqtt.subscribe("TT/led", {qos: 2});
-	mqtt.subscribe("TT/Temp", {qos: 2});
+	mqtt.subscribe("TT/temp", {qos: 2});
 	mqtt.subscribe("TT/Aff", {qos: 2});
 	$('#topic').val("TT/led et Temp")
 }
