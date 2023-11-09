@@ -53,14 +53,16 @@
         payload = JSON.parse(payload);
         if(topic === "TT/Aff"){
             let Humidite = document.querySelector(".degreH");
-            Humidite.textContent = payload[i].date;
+            Humidite.textContent = payload[0].date;
             //Humidite.textContent = payload.length.toString();
         
         //tab2.push([payload.length, payload.length]);
+        
         for (var i=0; i<payload.length;i++){
-        tab2.push([parseFloat(payload[i].date), parseFloat(payload[i].temp)]);
-        }
+        tab2.push(parseFloat(payload[i].time), parseFloat(payload[i].temp));
+    }
         if (plot2) plot2.destroy();
+        
         plot2 = $.jqplot('chart2', tab2, {  
                 series:[{showMarker:false}],
                 axes:{
@@ -75,7 +77,8 @@
                 }
             }
         });
-        }
+        
+    }
         if(topic === "TT/temp"){
         let temperature = document.querySelector(".degreT");
         if(payload > 27 && rearmement()){
