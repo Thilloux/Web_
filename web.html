@@ -55,7 +55,7 @@
             Humidite.textContent = "truc";
         //payload = JSON.parse(payload);
         for (var i=0; i<payload.length;i++){
-        tab2.push([parseFloat(payload[i].temp), parseFloat(payload[i].temp)]);
+        tab2.push([parseFloat(payload[i].date), parseFloat(payload[i].temp)]);
         }
         if (plot2) plot2.destroy();
         plot2 = $.jqplot('chart2', tab2, {  
