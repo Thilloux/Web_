@@ -35,19 +35,12 @@
         // Connection succeeded; subscribe to our topic
         mqtt.subscribe("TT/temp", {qos: 2});
         mqtt.subscribe("TT/Aff", {qos: 2});
-        $('#topic').val("Topic")
+        $('#topic').val("TT/temp et Aff");
     }
     function onConnectionLost(response) {
         setTimeout(MQTTconnect, reconnectTimeout);
         $('#status').val("connection lost: " + responseObject.errorMessage + ". Reconnecting");
     };
-    // function onMessageArrived(message) {
-    //     var topic = message.destinationName;
-    //     var payload = message.payloadString;
-    //     let temperature = document.querySelector(".degre");
-    //     temperature.textContent = payload.toString();
-    //     //$('.degre').val(payload.toString());
-    // };
 
     var plot1 = null;
     var plot2 = null;
@@ -62,7 +55,7 @@
             Humidite.textContent(payload.toString());
         payload = JSON.parse(payload);
         for (var i=0; i<payload.length;i++){
-        tab2.push([data[i].time, data[i].temp]);
+        tab2.push([payload[i].time, payload[i].temp]);
         }
         if (plot2) plot2.destroy();
         plot2 = $.jqplot('chart2', tab2, {  
