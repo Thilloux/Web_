@@ -54,9 +54,10 @@
             let Humidite = document.querySelector(".degreH");
             Humidite.textContent = "truc";
         //payload = JSON.parse(payload);
-        for (var i=0; i<payload.length;i++){
+        tab2.push([parseFloat(payload[0].date), parseFloat(payload[0].temp)]);
+        /*for (var i=0; i<payload.length;i++){
         tab2.push([parseFloat(payload[i].date), parseFloat(payload[i].temp)]);
-        }
+        }*/
         if (plot2) plot2.destroy();
         plot2 = $.jqplot('chart2', tab2, {  
                 series:[{showMarker:false}],
