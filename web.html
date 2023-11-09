@@ -52,7 +52,7 @@
         var payload = message.payloadString;
         if(topic === "TT/Aff"){
             let Humidite = document.querySelector(".degreH");
-            Humidite.textContent = "payload[0].date";
+            Humidite.textContent = payload[0].date.toString();
         //payload = JSON.parse(payload);
         for (var i=0; i<payload.length;i++){
         tab2.push([payload[i].temp, payload[i].temp]);
