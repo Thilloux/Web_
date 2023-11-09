@@ -59,7 +59,7 @@
         if(topic === "TT/Aff"){
         payload = JSON.parse(payload);
         for (var i=0; i<payload.length;i++){
-        tab2.push(data[i].time, data[i].temp);
+        tab2.push([data[i].time, data[i].temp]);
         }
         if (plot2) plot2.destroy();
         plot2 = $.jqplot('chart2', tab2, {  
@@ -79,7 +79,7 @@
         }
         if(topic === "TT/temp"){
         let temperature = document.querySelector(".degre");
-        if(payload > 22 && rearmement()){
+        if(payload > 27 && rearmement()){
             alerte();
         }
         if(rearmement()){
@@ -93,7 +93,7 @@
         if (tab_temp.length > 20 ) tab_temp.shift();
         if (plot1) plot1.destroy();
 
-        plot1 = $.jqplot('chart1', [tab_temp], {  
+        plot1 = $.jqplot('chart2', [tab_temp], {  
             series:[{showMarker:false}],
             axes:{
             xaxis:{
