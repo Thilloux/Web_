@@ -54,13 +54,9 @@
         if(topic === "TT/Aff"){
             let Humidite = document.querySelector(".degreH");
             Humidite.textContent = payload[0].time;
-            //Humidite.textContent = payload.length.toString();
-        
-        //tab2.push([payload.length, payload.length]);
-        
-        for (var i=0; i<payload.length;i++){
-        tab2.push([payload[i].time, parseFloat(payload[i].temp)]);
-    }
+            for (var i=0; i<payload.length;i++){
+                tab2.push([payload[i].time, parseFloat(payload[i].temp)]);
+            }
         if (plot2) plot2.destroy();
         
         plot2 = $.jqplot('chart2', [tab2], {  
