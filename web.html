@@ -130,7 +130,7 @@
     $(document).ready(function() {
         MQTTconnect();
         $("#Button1").click(function() {
-            mqtt.send("TT/led","ON");
+            mqtt.send("TT/temp_demande", {"notify":true, "period":0});
         });
         $("#Button0").click(function() {
             mqtt.send("TT/led","OFF");
