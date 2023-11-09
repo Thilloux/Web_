@@ -79,7 +79,13 @@
         }
         if(topic === "TT/temp"){
         let temperature = document.querySelector(".degre");
-        temperature.textContent = payload.toString();
+        if(payload > 22 && rearmement()){
+            alerte();
+        }
+        if(rearmement()){
+            temperature.textContent = payload.toString();
+        }
+        
         var date= new Date();
         var xlabel = date.getMinutes() + ":"+ date.getSeconds();
 
@@ -102,6 +108,20 @@
         }
     });
     }
+    };
+
+    function rearmement(){
+        let rearmement = document.querySelector("#rearmement");
+        return rearmement.checked;
+    };
+
+    function alerte(){
+        let alerte = document.querySelector("#alerte_rouge");
+        let temperature = document.querySelector(".degre");
+        alerte.style.display = 'inline';
+        temperature.textContent = "ALERTE";
+        let rearmement = document.querySelector("#rearmement");
+        rearmement.checked = false;
     };
     
     
