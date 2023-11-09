@@ -52,7 +52,7 @@
         var payload = message.payloadString;
         if(topic === "TT/Aff"){
             let Humidite = document.querySelector(".degreH");
-            Humidite.textContent = payload[0].date.toString();
+            Humidite.textContent = "truc";
         //payload = JSON.parse(payload);
         for (var i=0; i<payload.length;i++){
         tab2.push([payload[i].temp, payload[i].temp]);
@@ -113,7 +113,7 @@
 
     function alerte(){
         let alerte = document.querySelector("#alerte_rouge");
-        let temperature = document.querySelector(".degre");
+        let temperature = document.querySelector(".degreT");
         alerte.style.display = 'inline';
         temperature.textContent = "ALERTE";
         let rearmement = document.querySelector("#rearmement");
