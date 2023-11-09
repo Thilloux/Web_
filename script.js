@@ -41,28 +41,23 @@ function TT(){
     // tt.value = "test";
     // status.value = "Test 2";
     // button.textContent = "Test 2";
-    let alerte = document.querySelector("#alerte_rouge");
+    
     //alerte.style.display = "none";
     if(flag == 0){
         i++;
     }
-    
-    let rearmement = document.querySelector("#rearmement");
-    rearmement.checked = true;
     let temperature = document.querySelector(".degre");
     temperature.textContent = i.toString();
-    if(i>10 && rearmement.checked){
-        temperature.textContent = "ALERTE";
+    if(i>10 && rearmement()){
         flag = 1;
         i=0;
         const webhookURL = 'https://maker.ifttt.com/trigger/alert_museum/json/with/key/KauxDKYMOtdLxqcE5DLMPaIv1I91HBJNFqk9_7nv1g?value1=value1&value2=value2&value3=value3';
-        rearmement.checked = false;
-        alerte.style.display = 'inline';
+        alerte();
         // flag = 0;
     // Écoutez le résultat de l'applet IFTTT
-    fetch(webhookURL, {
-        method: 'POST',
-    })
+    // fetch(webhookURL, {
+    //     method: 'POST',
+    // })
     };
 
     var date= new Date();
@@ -93,6 +88,20 @@ var plot2 = null;
 var i=1;
 var tab_temp = [];
 var tab2 = [];
+
+function rearmement(){
+	let rearmement = document.querySelector("#rearmement");
+	return rearmement.checked;
+	
+}
+
+function alerte(){
+	let alerte = document.querySelector("#alerte_rouge");
+	let temperature = document.querySelector(".degre");
+	alerte.style.display = 'inline';
+	temperature.textContent = "ALERTE";
+}
+
 function onMessageArrived(message) {
 	var topic = message.destinationName;
 	var payload = message.payloadString;
@@ -117,7 +126,7 @@ function onMessageArrived(message) {
       	  }
   	});
 	}
-	if(topic === "TT/Temp"){
+	if(topic === "TT/Temp" & rearmement()){
 	$('.degre').val(payload);//prepend('<li>' + topic + ' = ' + payload + '</li>');
 	var date= new Date();
 	var xlabel = date.getMinutes() + ":"+ date.getSeconds();
@@ -144,7 +153,7 @@ function onMessageArrived(message) {
 };
 
 $(document).ready(function() {
-    //setInterval(TT, 1000);
+    setInterval(TT, 1000);
     onMessageArrived()
     //TT();
     MQTTconnect();
