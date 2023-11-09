@@ -145,7 +145,10 @@ main{
     grid-column: 1/2;
 }
 
-.degre{
+.degreT{
+    font-size: 15em;
+}
+.degreH{
     font-size: 15em;
 }
 

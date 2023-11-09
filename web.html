@@ -57,6 +57,8 @@
         var topic = message.destinationName;
         var payload = message.payloadString;
         if(topic === "TT/Aff"){
+            let Humidite = document.querySelector(".degreH");
+            Humidite.textContent(payload.toString());
         payload = JSON.parse(payload);
         for (var i=0; i<payload.length;i++){
         tab2.push([data[i].time, data[i].temp]);
@@ -78,7 +80,7 @@
         });
         }
         if(topic === "TT/temp"){
-        let temperature = document.querySelector(".degre");
+        let temperature = document.querySelector(".degreT");
         if(payload > 27 && rearmement()){
             alerte();
         }
@@ -163,12 +165,12 @@
             </section>
             <section class="temperature_donnee">
                 <h1 id="Température">Température</h1>
-                <div class="temp_reel">Température mesurée en temps réel :<div class="degre">25.2 °C</div></div>
+                <div class="temp_reel">Température mesurée en temps réel :<div class="degreT">25.2 °C</div></div>
                 <div class="historique">Historique : <div id="chart1"></div></div>          
             </section>
             <section class="humidite_donnee">
                 <h1 id="Humidité">Humidité</h1>
-                <div class="temp_reel">Humidité mesurée en temps réel :<div class="degre">25.2 °C</div></div>
+                <div class="temp_reel">Humidité mesurée en temps réel :<div class="degreH">25.2 °C</div></div>
                 <div class="historique">Historique : <div id="chart2"></div> </div>
             </section>
             <section class="alerte_donnee">
