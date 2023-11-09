@@ -34,6 +34,7 @@
         $('#status').val('Connected to host ');
         // Connection succeeded; subscribe to our topic
         mqtt.subscribe("TT/temp", {qos: 2});
+        mqtt.subscribe("TT/Aff", {qos: 2});
         $('#topic').val("Topic")
     }
     function onConnectionLost(response) {
@@ -95,7 +96,7 @@
         if (tab_temp.length > 20 ) tab_temp.shift();
         if (plot1) plot1.destroy();
 
-        plot1 = $.jqplot('chart2', [tab_temp], {  
+        plot1 = $.jqplot('chart1', [tab_temp], {  
             series:[{showMarker:false}],
             axes:{
             xaxis:{
