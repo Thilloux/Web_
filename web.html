@@ -98,10 +98,13 @@
         if(topic === "TT/temp"){
         let temperature = document.querySelector(".degreT");
         let Humidite = document.querySelector(".degreH");
-        if((payload[0] > 27 || payload[1] > 60) && rearmement()){
+        if(payload[0] > 27 && rearmement()){
             alerte();
         }
-        if(rearmement()){
+        else if(payload[1] > 60 && rearmement()){
+            alerte();
+        }
+        else if(rearmement()){
             temperature.textContent = payload[0].toString();
             Humidite.textContent = payload[1].toString();
         }
