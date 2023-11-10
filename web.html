@@ -133,6 +133,7 @@
         });
         $("#Button2").click(function() {
             //mqtt.send("TT/led","OFF");
+            tab = [];
             var date = document.querySelector(".date");
             mqtt.send("TT/demande_db", date.value);
         });
