@@ -76,11 +76,13 @@
     }
         if(topic === "TT/temp"){
         let temperature = document.querySelector(".degreT");
+        let Humidite = document.querySelector(".degreH");
         if(payload > 27 && rearmement()){
             alerte();
         }
         if(rearmement()){
             temperature.textContent = payload[0].toString();
+            Humidite.textContent = payload[1].toString();
         }
         
         var date= new Date();
