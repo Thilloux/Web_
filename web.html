@@ -153,6 +153,11 @@
 
     function rearmement(){
         let rearmement = document.querySelector("#rearmement");
+        let alerte = document.querySelector("#alerte_rouge");
+        if(rearmement.checked){
+            alerte.style.display = 'none';
+            mqtt.send("TT/led","OFF");
+        }
         return rearmement.checked;
     };
 
@@ -163,6 +168,7 @@
         temperature.textContent = "ALERTE";
         let rearmement = document.querySelector("#rearmement");
         rearmement.checked = false;
+        mqtt.send("TT/led","ON");
     };
     
     
@@ -214,6 +220,7 @@
                 <ul id="ws" style="font-family: 'Courier New',Courier,monospace;"></ul>      
             </section>
             <section class="temperature_donnee">
+                <img id="alerte_rouge" src="alerte-rouge.png" alt="alerte rouge" style="display: none;">
                 <h1 id="Température">Température</h1>
                 <div class="temp_reel">Température mesurée en temps réel :<div class="degreT"></div></div>
                 <div class="historique">Historique : <div id="chart1"></div></div>
@@ -227,8 +234,7 @@
             <section class="alerte_donnee">
                 <h1 id="Système de sécurité">Système de sécurité</h1>
                 <input id="rearmement" type="checkbox" value="Réarmement" checked>
-                <label for="Réarmement">Système opérationnel</label><br>
-                <img id="alerte_rouge" src="alerte-rouge.png" alt="alerte rouge" style="display: none;">
+                <label for="Réarmement">Système opérationnel</label>
             </section>
             <section class="database">
                 <h1 id="Historique">Data Base</h1><br>
