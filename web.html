@@ -134,7 +134,9 @@
             mqtt.send("TT/temp_demande", json_message);
         });
         $("#Button0").click(function() {
-            mqtt.send("TT/led","OFF");
+            //mqtt.send("TT/led","OFF");
+            let date = document.querySelector(".date");
+            mqtt.send("TT/demande_db", date.textContent);
         });
     });
     </script>
@@ -185,7 +187,8 @@
                 <img id="alerte_rouge" src="alerte-rouge.png" alt="alerte rouge" style="display: none;">
             </section>
             <section class="database">
-                <h1 id="Historique">Data Base</h1>
+                <h1 id="Historique">Data Base</h1><br>
+                <input class="date" type="text">
                 <div class="historique_temp">Historique Température: <div id="chart3"></div></div>
                 <div class="historique_humidite">Historique Humidité: <div id="chart4"></div></div>
             </section>
