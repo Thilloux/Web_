@@ -46,21 +46,40 @@
     var plot1 = null;
     var plot2 = null;
     var plot3 = null;
+    var plot4 = null;
     var i=1;
     var tab_temp = [];
     var tab_hum = [];
     var tab2 = [];
+    var tab3 = [];
     function onMessageArrived(message) {
         var topic = message.destinationName;
         var payload = message.payloadString;
         payload = JSON.parse(payload);
         if(topic === "TT/Aff"){
             for (var i=0; i<payload.length;i++){
-                tab2.push([payload[i].time, parseFloat(payload[i].temp)]);
+                tab2.push([payload[i].time, payload[i].temp[0]]);
+                tab3.push([payload[i].time, payload[i].temp[1]]);
             }
         if (plot2) plot2.destroy();
+        if (plot4) plot4.destroy();
         
         plot2 = $.jqplot('chart3', [tab2], {  
+                series:[{showMarker:false}],
+                axes:{
+                xaxis:{
+                label:'heure (S)',
+            labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+            renderer: $.jqplot.CategoryAxisRenderer,
+                },
+                yaxis:{
+                label:'Temperature ( °C )',
+            labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+                }
+            }
+        });
+
+        plot4 = $.jqplot('chart4', [tab3], {  
                 series:[{showMarker:false}],
                 axes:{
                 xaxis:{
@@ -156,6 +175,7 @@
         $("#Button2").click(function() {
             //mqtt.send("TT/led","OFF");
             tab2 = [];
+            tab3 = [];
             var date = document.querySelector(".date");
             mqtt.send("TT/demande_db", date.value);
         });
