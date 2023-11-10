@@ -45,8 +45,10 @@
 
     var plot1 = null;
     var plot2 = null;
+    var plot3 = null;
     var i=1;
     var tab_temp = [];
+    var tab_hum = [];
     var tab2 = [];
     function onMessageArrived(message) {
         var topic = message.destinationName;
@@ -88,9 +90,12 @@
         var date= new Date();
         var xlabel = date.getMinutes() + ":"+ date.getSeconds();
 
-        tab_temp.push([xlabel,parseFloat(payload)]);
+        tab_temp.push([xlabel,parseFloat(payload[0])]);
         if (tab_temp.length > 20 ) tab_temp.shift();
+        tab_hum.push([xlabel,parseFloat(payload[1])]);
+        if (tab_hum.length > 20 ) tab_hum.shift();
         if (plot1) plot1.destroy();
+        if (plot3) plot3.destroy();
 
         plot1 = $.jqplot('chart1', [tab_temp], {  
             series:[{showMarker:false}],
@@ -102,6 +107,21 @@
             },
             yaxis:{
             label:'Temperature ( °C )',
+        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+            }
+        }
+    });
+
+    plot3 = $.jqplot('chart2', [tab_hum], {  
+            series:[{showMarker:false}],
+            axes:{
+            xaxis:{
+            label:'temps (S)',
+        labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+        renderer: $.jqplot.CategoryAxisRenderer,
+            },
+            yaxis:{
+            label:'Humidite ( % )',
         labelRenderer: $.jqplot.CanvasAxisLabelRenderer
             }
         }
