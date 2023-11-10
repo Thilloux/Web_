@@ -136,7 +136,7 @@
         $("#Button0").click(function() {
             //mqtt.send("TT/led","OFF");
             var date = document.querySelector(".date");
-            mqtt.send("TT/demande_db", date.textContent);
+            mqtt.send("TT/demande_db", date.value);
         });
     });
     </script>
