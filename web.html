@@ -125,7 +125,7 @@
     $(document).ready(function() {
         MQTTconnect();
         $("#Button1").click(function() {
-            message_data = {"notify": True, "period": 0}
+            message_data = {"notify": true, "period": 0}
 
             // Convertir les données JSON en chaîne JSON
             json_message = json.dumps(message_data)
