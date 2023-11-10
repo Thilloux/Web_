@@ -53,8 +53,6 @@
         var payload = message.payloadString;
         payload = JSON.parse(payload);
         if(topic === "TT/Aff"){
-            let Humidite = document.querySelector(".degreH");
-            Humidite.textContent = payload[0].time;
             for (var i=0; i<payload.length;i++){
                 tab2.push([payload[i].time, parseFloat(payload[i].temp)]);
             }
@@ -133,7 +131,7 @@
             json_message = json.dumps(message_data)
             mqtt.send("TT/temp_demande", json_message);
         });
-        $("#Button0").click(function() {
+        $("#Button2").click(function() {
             //mqtt.send("TT/led","OFF");
             var date = document.querySelector(".date");
             mqtt.send("TT/demande_db", date.value);
@@ -188,7 +186,7 @@
             </section>
             <section class="database">
                 <h1 id="Historique">Data Base</h1><br>
-                <input class="date" type="text">
+                <input class="date" type="text"><input id="Button2" value="Envoi" type="button" />
                 <div class="historique_temp">Historique Température: <div id="chart3"></div></div>
                 <div class="historique_humidite">Historique Humidité: <div id="chart4"></div></div>
             </section>
