@@ -45,7 +45,7 @@ nav{
     /* display : wrap; 
     flex-wrap: nowrap;
     flex-direction: column; */
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 5px;
 }
 
@@ -88,6 +88,24 @@ nav{
 }
 
 .alerte:hover{
+    box-shadow: 5px 5px 5px;
+}
+
+.historique_titre{
+    margin: 10px;
+    padding: 25px;
+    text-align: center;
+
+    border: 1px black solid;
+    border-radius: 10px;
+
+    background-color: white;
+    background-image: url("database.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.historique_titre:hover{
     box-shadow: 5px 5px 5px;
 }
 
@@ -138,6 +156,14 @@ main{
     text-align: justify;
 }
 
+.database{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    border-radius: 10px;
+    text-align: justify;
+}
+
 .temp_reel{
     border: 1px black solid;
     border-radius: 10px;
@@ -153,6 +179,20 @@ main{
 }
 
 .historique{
+    border: 1px black solid;
+    border-radius: 10px;
+    text-align: center;
+    grid-column: 2/2;
+}
+
+.historique_temp{
+    border: 1px black solid;
+    border-radius: 10px;
+    text-align: center;
+    grid-column: 1/2;
+}
+
+.historique_humidite{
     border: 1px black solid;
     border-radius: 10px;
     text-align: center;

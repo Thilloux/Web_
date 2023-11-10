@@ -126,7 +126,11 @@
     $(document).ready(function() {
         MQTTconnect();
         $("#Button1").click(function() {
-            mqtt.send("TT/temp_demande", {"notify":true, "period":0});
+            message_data = {"notify": True, "period": 0}
+
+            // Convertir les données JSON en chaîne JSON
+            json_message = json.dumps(message_data)
+            mqtt.send("TT/temp_demande", json_message);
         });
         $("#Button0").click(function() {
             mqtt.send("TT/led","OFF");
@@ -150,6 +154,9 @@
                     <p class="alerte">
                         <a href="#Système de sécurité">Système de sécurité</a>
                     </p>
+                    <p class="historique_titre">
+                        <a href="#Historique">Data Base</a>
+                    </p>
                 </div>
         </nav>
         <main>
@@ -161,12 +168,13 @@
             </section>
             <section class="temperature_donnee">
                 <h1 id="Température">Température</h1>
-                <div class="temp_reel">Température mesurée en temps réel :<div class="degreT">25.2 °C</div></div>
-                <div class="historique">Historique : <div id="chart1"></div></div>          
+                <div class="temp_reel">Température mesurée en temps réel :<div class="degreT"></div></div>
+                <div class="historique">Historique : <div id="chart1"></div></div>
+                     
             </section>
             <section class="humidite_donnee">
                 <h1 id="Humidité">Humidité</h1>
-                <div class="temp_reel">Humidité mesurée en temps réel :<div class="degreH">25.2 °C</div></div>
+                <div class="temp_reel">Humidité mesurée en temps réel :<div class="degreH"></div></div>
                 <div class="historique">Historique : <div id="chart2"></div> </div>
             </section>
             <section class="alerte_donnee">
@@ -174,6 +182,11 @@
                 <input id="rearmement" type="checkbox" value="Réarmement" checked>
                 <label for="Réarmement">Système opérationnel</label><br>
                 <img id="alerte_rouge" src="alerte-rouge.png" alt="alerte rouge" style="display: none;">
+            </section>
+            <section class="database">
+                <h1 id="Historique">Data Base</h1>
+                <div class="historique_temp">Historique Température: <div id="chart3"></div></div>
+                <div class="historique_humidite">Historique Humidité: <div id="chart4"></div></div>
             </section>
         </main>
         <footer>
