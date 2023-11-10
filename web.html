@@ -164,8 +164,10 @@
     function alerte(){
         let alerte = document.querySelector("#alerte_rouge");
         let temperature = document.querySelector(".degreT");
+        let humidite = document.querySelector(".degreH");
         alerte.style.display = 'inline';
         temperature.textContent = "ALERTE";
+        humidite.textContent = "ALERTE";
         let rearmement = document.querySelector("#rearmement");
         rearmement.checked = false;
         mqtt.send("TT/led","ON");
