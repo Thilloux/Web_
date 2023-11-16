@@ -36,7 +36,8 @@
         // Connection succeeded; subscribe to our topic
         mqtt.subscribe("TT/temp", {qos: 2});
         mqtt.subscribe("TT/Aff", {qos: 2});
-        $('#topic').val("TT/temp et Aff");
+        mqtt.subscribe("TT/acc", {qos: 2});
+        $('#topic').val("TT/temp et Aff et Acc");
     }
     function onConnectionLost(response) {
         setTimeout(MQTTconnect, reconnectTimeout);
@@ -47,15 +48,49 @@
     var plot2 = null;
     var plot3 = null;
     var plot4 = null;
+    var plot5 = null;
     var i=1;
     var tab_temp = [];
     var tab_hum = [];
+    var tab_mouv = [];
     var tab2 = [];
     var tab3 = [];
     function onMessageArrived(message) {
         var topic = message.destinationName;
         var payload = message.payloadString;
         payload = JSON.parse(payload);
+        if(topic === "TT/acc"){
+            var moyenne = Math.sqrt(payload[0]*payload[0] + payload[1]*payload[1] + payload[2]*payload[2]);
+            moyenne = Math.trunc(moyenne);
+            let accelerometre = document.querySelector(".acc");
+            if(moyenne > 850 && moyenne < 1000 && rearmement()){
+                alerte("motion");
+            }
+            else if(rearmement()){
+                accelerometre.textContent = moyenne.toString();
+            }
+            var date= new Date();
+            var xlabel = date.getMinutes() + ":"+ date.getSeconds();
+
+        tab_mouv.push([xlabel,parseFloat(moyenne)]);
+        if (tab_mouv.length > 20 ) tab_mouv.shift();
+        if (plot5) plot5.destroy();
+
+        plot5 = $.jqplot('chart5', [tab_mouv], {  
+            series:[{showMarker:false}],
+            axes:{
+            xaxis:{
+            label:'temps (S)',
+        labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+        renderer: $.jqplot.CategoryAxisRenderer,
+            },
+            yaxis:{
+            label:'Mouvement ( mm/s² )',
+        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+            }
+        }
+    });
+        }
         if(topic === "TT/Aff"){
             for (var i=0; i<payload.length;i++){
                 tab2.push([payload[i].time, payload[i].temp[0]]);
@@ -99,10 +134,10 @@
         let temperature = document.querySelector(".degreT");
         let Humidite = document.querySelector(".degreH");
         if(payload[0] > 27 && rearmement()){
-            alerte();
+            alerte("temp");
         }
         else if(payload[1] > 60 && rearmement()){
-            alerte();
+            alerte("humid");
         }
         else if(rearmement()){
             temperature.textContent = payload[0].toString();
@@ -161,13 +196,13 @@
         return rearmement.checked;
     };
 
-    function alerte(){
+    function alerte(string){
         let alerte = document.querySelector("#alerte_rouge");
         let temperature = document.querySelector(".degreT");
         let humidite = document.querySelector(".degreH");
         alerte.style.display = 'inline';
-        temperature.textContent = "ALERTE";
-        humidite.textContent = "ALERTE";
+        temperature.textContent = "ALERTE" + string;
+        humidite.textContent = "ALERTE" + string;
         let rearmement = document.querySelector("#rearmement");
         rearmement.checked = false;
         mqtt.send("TT/led","ON");
@@ -232,6 +267,11 @@
                 <h1 id="Humidité">Humidité</h1>
                 <div class="temp_reel">Humidité mesurée en temps réel :<div class="degreH"></div></div>
                 <div class="historique">Historique : <div id="chart2"></div> </div>
+            </section>
+            <section class="humidite_donnee">
+                <h1 id="Humidité">Effraction</h1>
+                <div class="temp_reel">Mouvement mesurée en temps réel :<div class="acc"></div></div>
+                <div class="historique">Historique : <div id="chart5"></div> </div>
             </section>
             <section class="alerte_donnee">
                 <h1 id="Système de sécurité">Système de sécurité</h1>
