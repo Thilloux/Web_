@@ -64,7 +64,7 @@
             moyenne = Math.trunc(moyenne);
             let accelerometre = document.querySelector(".acc");
             if(moyenne > 850 && moyenne < 1000 && rearmement()){
-                alerte("motion");
+                alerte("Vol");
             }
             else if(rearmement()){
                 accelerometre.textContent = moyenne.toString();
@@ -134,10 +134,10 @@
         let temperature = document.querySelector(".degreT");
         let Humidite = document.querySelector(".degreH");
         if(payload[0] > 27 && rearmement()){
-            alerte("temp");
+            alerte("Temperature");
         }
-        else if(payload[1] > 60 && rearmement()){
-            alerte("humid");
+        else if(payload[1] > 75 && rearmement()){
+            alerte("Humidite");
         }
         else if(rearmement()){
             temperature.textContent = payload[0].toString();
@@ -200,12 +200,20 @@
         let alerte = document.querySelector("#alerte_rouge");
         let temperature = document.querySelector(".degreT");
         let humidite = document.querySelector(".degreH");
+        let vol = document.querySelector(".acc");
         alerte.style.display = 'inline';
-        temperature.textContent = "ALERTE" + string;
-        humidite.textContent = "ALERTE" + string;
+        temperature.textContent = string;
+        humidite.textContent = string;
+        vol.textContent = string;
         let rearmement = document.querySelector("#rearmement");
         rearmement.checked = false;
         mqtt.send("TT/led","ON");
+        const webhookURL = 'https://maker.ifttt.com/trigger/alert_museum/json/with/key/KauxDKYMOtdLxqcE5DLMPaIv1I91HBJNFqk9_7nv1g?value1=value1&value2=value2&value3=value3';
+        
+    // Écoutez le résultat de l'applet IFTTT
+    fetch(webhookURL, {
+        method: 'POST',
+    })
     };
     
     
